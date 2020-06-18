@@ -1,0 +1,109 @@
+function doPost(e) {
+  /*受信したトークン情報を読み込み*/
+  var json = JSON.parse(e.postData.contents); // jsonの呼び出し
+  var message = json.events[0].message.text;  // 送られたメッセージの内容
+  var time_send = json.events[0].timestamp;   // メッセージの送信された時間
+  var message_userId = json.events[0].source.userId; // 送信者のID
+  var morning_variety = ['おはよう','おはようございます'];
+  var night_variety = ['おやすみ','おやすみなさい'];
+  
+  /*送信するためのトークン取得*/
+  var reply_token = json.events[0].replyToken;
+  if(typeof reply_token === 'undefined') {
+    return;
+  }
+  
+  /*スプレッドシートの読み込み*/
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('シート1');
+  const lastRow = sheet.getLastRow();
+  const row_Id = 1;
+  const row_sleep = 2;
+  const userLineNum = seachLineNum(message_userId, row_Id, lastRow, sheet);  //userIdに対応する行
+  /*送信するトークン情報*/
+  var reply_message;  // 返信内容
+  var do_reply = 0;   // 返信するなら1,しないなら0
+  
+  /*発言が「おはよう」の時の処理*/
+  if(isSame(message, morning_variety)) {
+    reply_message = 'おはようございます。';
+    do_reply=1;
+    
+    /*シート情報から睡眠時間を計算*/
+    var time_sleep;  // 単位はミリ秒
+    if(userLineNum !== -1) time_sleep = time_send-sheet.getRange(userLineNum, row_sleep).getValue();
+    else time_sleep = -1;
+    
+    if(time_sleep !== -1) {
+      time_sleep = time_sleep/1000;  // 単位を秒に変換
+      var hour = Math.floor(time_sleep/(60*60)); // 時間を計算
+      time_sleep = time_sleep%(60*60);
+      var minute = Math.floor(time_sleep/(60)); //分を計算
+      
+      if(hour >= 1) {
+        if(minute !== 0) reply_message += '\n'+Math.floor(hour)+'時間'+Math.floor(minute)+'分寝ましたね。';
+        else reply_message += '\n'+Math.floor(hour)+'時間寝ましたね。\n'
+      } else {
+        if(minute !== 0) reply_message += '\n'+Math.floor(minute)+'分寝ましたね。';
+        else reply_message = '今寝たばかりですよ!';
+      }
+    } else if(time_sleep === -1) {
+      reply_message += '\nお休みを言っていないので時間が分かりません。';
+    }
+  }
+  
+  /*発言が「おやすみ」の時の処理*/
+  if(isSame(message, night_variety))  {
+    reply_message = 'おやすみなさい。';
+    do_reply = 1;
+    // 発言した時刻をスプレッドシートに書き込む
+    if(userLineNum !== -1) sheet.getRange(userLineNum, row_sleep).setValue(time_send);
+    else {
+      sheet.getRange(lastRow+1, row_Id).setValue(message_userId);
+      sheet.getRange(lastRow+1, row_sleep).setValue(time_send);
+    }
+  }
+  
+  /*メッセージを返信*/
+  if(do_reply === 1) {
+    sendReplyMessage(reply_token, reply_message);
+  }
+  return ContentService.createTextOutput(JSON.stringify({'content' : 'post ok'})).setMimeType(ContentService.MimeType.JSON);
+}
+
+//文字列とリストで一致するかを判定
+function isSame(str, str_list) {
+  for(var i = 0; i < str_list.length; i++) {
+    if(str === str_list[i]) {
+       return true;
+    }
+  }
+}
+
+// Idからシート内の対応する行数を返す, Idが見つからなければ=1を返す
+function searchLineNum(userId, row_Id, lastRow, sheet) {
+  for(let i= 1; i <= lastRow; i++) {
+    if(userId === sheet.getRange(i, row_Id).getValue()) return i;
+  }
+  return -1;
+}
+
+// メッセージ送信部分
+function sendReplyMessage(reply_token, reply_message) {
+  var CHANNEL_ACCESS_TOKEN = 'DeFHGb1Oe15fKdZIY2QnMwwSu1/cSN4nASXALH8fIyY7Ixj8sTh/ymzkkzVD7fPP3dc54GLUq8/T6SJxZDcoxfZKnInaIBWABfz44iifT/ReHjiEd3DKO3DDLT17MbISLhW4YjNxBUnnmE0Ym8N+xgdB04t89/1O/w1cDnyilFU=';
+  var line_endpoint = 'https://api.line.me/v2/bot/message/reply';
+  UrlFetchApp.fetch(line_endpoint, {
+    'headers': {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
+    },
+    'method': 'post',
+    'payload': JSON.stringify({
+      'replyToken': reply_token,
+      'messages': [{
+        'type': 'text',
+        'text': reply_message,
+      }],
+    }),
+  });
+}

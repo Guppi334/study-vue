@@ -72,3 +72,8 @@ input type="text"のみ:value=要素名 @input="要素名 = $event.target.value"に書き換
 
 component内でv-modelを使用したい場合、コンポーネントファイルにprops、emitを追加してデータの受け渡しを実装する必要がある
 
+カスタムディレクトティブの引数は１つしか取れない
+値は複数ある場合はオブジェクト化することで対応できる
+
+binding.modifiers.修飾名で修飾子が存在するかチェックできる
+
