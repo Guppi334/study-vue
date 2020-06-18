@@ -5,6 +5,15 @@ import LikeNumber from './components/LikeNumber.vue'
 Vue.config.productionTip = false
 
 Vue.component('LikeNumber', LikeNumber)
+Vue.filter("upperCase", function(value) {
+  console.log("フィル")
+  return value.toUpperCase();
+})
+Vue.mixin({
+  created(){
+    console.log("created in global mixin");
+  }
+})
 
 new Vue({
   render: h => h(App),
