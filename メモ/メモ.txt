@@ -77,3 +77,12 @@ component“à‚Åv-model‚ðŽg—p‚µ‚½‚¢ê‡AƒRƒ“ƒ|[ƒlƒ“ƒgƒtƒ@ƒCƒ‹‚ÉpropsAemit‚ð’Ç‰Á‚
 
 binding.modifiers.Cü–¼‚ÅCüŽq‚ª‘¶Ý‚·‚é‚©ƒ`ƒFƒbƒN‚Å‚«‚é
 
+ƒtƒBƒ‹ƒ^[‚ð“K—p‚³‚¹‚é‚½‚ß‚É‚Í"|" + ƒtƒBƒ‹ƒ^[–¼‚Å‹Lq‚·‚é
+ƒtƒBƒ‹ƒ^‚ÍÄ•`‰æ‚³‚ê‚éÛ‚É–ˆ‰ñ“K—p‚³‚ê‚é@ƒƒ\ƒbƒh‚Æ“¯—l
+
+mixin‚ÍƒIƒvƒVƒ‡ƒ“‚ð‹¤—L‰»‚·‚é‚à‚Ì jsƒtƒ@ƒCƒ‹‚Åì¬AŠeƒRƒ“ƒ|[ƒlƒ“ƒg‚Åimport‚µ‚ÄŽg—p‚·‚é
+
+mixin‚ÆƒRƒ“ƒ|[ƒlƒ“ƒg“à‚Å“¯‚¶ƒIƒvƒVƒ‡ƒ“‚ª‚ ‚éê‡‚ÍƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‚à‚Ì‚ª—DæA
+ƒ‰ƒCƒtƒTƒCƒNƒ‹ƒtƒbƒN‚ª‚ ‚éê‡‚Í—¼•ûŽÀs‚³‚êAmixin‚ªæ‚ÉŽÀs‚³‚ê‚é
+ƒOƒ[ƒoƒ‹‚Ìmixin‚Í‚·‚×‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚É“K—p‚³‚ê‚é
+
