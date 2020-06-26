@@ -103,3 +103,15 @@ leave-cancelledはv-showと同時に使用される場合にのみ有効化される
 cssアニメーションを適用させない場合、対処のタグに:css="false"を入れる
 transitionの再利用では、componentにし、中でslotを用いて値の受け渡しを行うことが定番
 
+■Vue-Router
+Vue.use(プラグイン名)でプラグインを適用する
+routeでmode:"history"とするとurlから#が消えるが、通信が行われている
+静的ホスティングサービスでhistoryモードを使用する場合、他のurlが送られた場合にindex.htmlを送信するようにするには自分でそうするように対応付ける必要があるため注意
+
+vue-routerでページ遷移するにはvue-linkで設定する
+動的urlはroute.jsに:変数名で設定できる
+ページから動的な部分に対してアクセスする場合には$route.params.変数名でアクセスできる
+router-linkで遷移する場合、ライフサイクルは実行されず、watchで$routeを監視することで遷移後事項したいことを記載する
+
+router-view内で表示させたページでrouter-viewは機能しない
+componentで表示させたrouter-viewは表示できる
