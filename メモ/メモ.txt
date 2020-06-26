@@ -115,3 +115,18 @@ router-linkで遷移する場合、ライフサイクルは実行されず、watchで$routeを監視するこ
 
 router-view内で表示させたページでrouter-viewは機能しない
 componentで表示させたrouter-viewは表示できる
+
+beforeEaceはログイン前のユーザをログインページに遷移させる等
+
+■VueX
+vuexはグローバル変数、stateのようなもの
+vuexのstoreの値を使用する場合はcomputedプロパティで基本的に使用する
+スプレッド演算子(...)をつけてobjecを記述するとcomputedプロパティ内でもmapgettersが使えるため、他のcomputedを使用する際はこれを使用する
+mutationは非同期処理はかけない
+commitの前にdispatchを行い、actionからcommitを行うようにする
+ヘルパー系はhtmlの呼び出し先で(引数)という形で記述
+mutation、actionで複数引数を渡す場合、オブジェクトで渡す
+computedプロパティ内でgetter,setterの役割を記載することもできる
+
+modulesフォルダ内に機能ごとに分ける方法、getters、actions、mutationsというオプションごとに分ける方法がある
+
