@@ -130,3 +130,5 @@ computedプロパティ内でgetter,setterの役割を記載することもできる
 
 modulesフォルダ内に機能ごとに分ける方法、getters、actions、mutationsというオプションごとに分ける方法がある
 
+netlifyで静的ホスティングサービスを行うことができる
+
