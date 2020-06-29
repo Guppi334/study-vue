@@ -132,3 +132,10 @@ modulesフォルダ内に機能ごとに分ける方法、getters、actions、mutationsというオプシ
 
 netlifyで静的ホスティングサービスを行うことができる
 
+■firebase
+・firebaseのurlは下記で設定
+https://firestore.googleapis.com/v1/projects/(各プロジェクトのID)/databases/(default)/documents/(テーブル名)
+
+
+認証トークンの付与の有無判別等の際に、axios.interceptors.response,requestを使用する
+エラー時の表示させる共通のモーダル設定等
